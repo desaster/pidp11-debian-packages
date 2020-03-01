@@ -10,7 +10,7 @@ The goal is to make installing, upgrading and maintaining a Rapsberry Pi based
 PiDP-11 system easy and clean.
 
 If you wish to simply install the packages on your system, see the
-Installation Instructions.
+[Installation Instructions](../../wiki/Installation-Instructions).
 
 The following packages are provided:
 
