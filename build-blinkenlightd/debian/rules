@@ -1,0 +1,31 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+export DEB_BUILD_OPTIONS=nocheck
+
+# blinkenbone makefile wants to know the architecture in a certain way,
+# let's figure it out
+DPKG_ARCH=$(shell dpkg --print-architecture)
+MAKE_ARCH=X86
+BIN_ARCH=x86
+ifeq ($(DPKG_ARCH),armhf)
+    MAKE_ARCH=RPI
+    BIN_ARCH=bin-rpi
+endif
+ifeq ($(DPKG_ARCH),amd64)
+    MAKE_ARCH=X64
+endif
+
+%:
+	dh $@ --with=systemd
+
+override_dh_auto_clean:
+	dh_auto_clean -- -C ../blinkenbone-repo/projects/11_pidp_server/pidp11 \
+	    MAKE_TARGET_ARCH=$(MAKE_ARCH) clean
+
+override_dh_auto_build:
+	$(MAKE) -C ../blinkenbone-repo/projects/11_pidp_server/pidp11 \
+	    MAKE_TARGET_ARCH=$(MAKE_ARCH) all
+
+override_dh_auto_install:
+	dh_auto_install -- BIN_ARCH=$(BIN_ARCH)

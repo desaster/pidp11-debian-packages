@@ -1,0 +1,13 @@
+VLM's TODO list for simh Debian package
+
+- VAX vs VAX780 situation
+- rewrite / recreate the itsbuild.html document using a free license
+- create "real" manpages for emulators
+- create useful manpage for macro8x
+- create useful manpage for macro1
+- create useful manpage for macro7
+- create useful manpage for littcvt mtcvtodd oct2bin sfmtcvt
+- convert mtdump docs from a .txt to a manpage
+- Add (all?) the manuals to the doc-base system
+- Get MACRO11 to build and integrate into the package.
+

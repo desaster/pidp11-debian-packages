@@ -1,0 +1,72 @@
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH Altair" command="/usr/bin/altair"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH Altair Z80" command="/usr/bin/altairz80"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP1" command="/usr/bin/pdp1"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP4" command="/usr/bin/pdp4"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP7" command="/usr/bin/pdp7"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP8" command="/usr/bin/pdp8"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP9" command="/usr/bin/pdp9"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP10" command="/usr/bin/pdp10"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP11" command="/usr/bin/pdp11"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DEC PDP15" command="/usr/bin/pdp15"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH DG Nova" command="/usr/bin/dgnova"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH GRI-909" command="/usr/bin/gri909"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH Honeywell 316/516" command="/usr/bin/h316"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH HP 2100" command="/usr/bin/hp2100"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH IBM System3" command="/usr/bin/system3"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH IBM 1401" command="/usr/bin/i1401"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH IBM 1620" command="/usr/bin/i1620"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH IBM 7094" command="/usr/bin/i7094"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH Interdata 16 bit" command="/usr/bin/id16"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH Interdata 32 bit" command="/usr/bin/id32"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH LGP" command="/usr/bin/lgp"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH SDS 940" command="/usr/bin/sds"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH VAX" command="/usr/bin/vax"
+
+?package(simh):needs="text" section="Applications/Emulators"\
+  title="SIMH VAX 780" command="/usr/bin/vax780"
+

@@ -1,0 +1,333 @@
+simh (4.0.0+git20200224+477bcbe9-0+upi) unstable; urgency=medium
+
+  * Unofficial version for PiDP-11 incorporating realcons changes with the
+    latest simh sources from git
+
+ -- Upi Tamminen <desaster@gmail.com>  Mon, 17 Feb 2020 20:16:02 +0200
+
+simh (3.8.1-6) unstable; urgency=medium
+
+  * New maintainer (Closes: 848569)
+  * Increase debhelper compat level to 10
+  * Bump Standards-Version to 4.0.0
+
+ -- Andreas Bombe <aeb@debian.org>  Fri, 21 Jul 2017 21:30:02 +0200
+
+simh (3.8.1-5) unstable; urgency=low
+
+  * Redoing debian/rules into the "tiny" version.
+    All the buildds blew up on my previous debian/rules changes
+    although local builds had worked.
+  * USE_NETWORK now defined in the makefile instead of debian/rules.
+
+ -- Vince Mulhollon <vlm@debian.org>  Tue, 19 Jul 2011 07:32:55 -0500
+
+simh (3.8.1-4) unstable; urgency=low
+
+  * Bump standards version from 3.9.1.0 to 3.9.2.0
+    fixes lintian out-of-date-standards-version
+  * Add vax780 back to the makefile, manpages, menu.
+    Mike Miller noticed it went missing between 3.3.2-1 and 3.6.1-1
+    I am not sure how/why it went missing.  Was not intentional.
+  * Added ${LIBS} resolving FTBFS when --as-needed is used as per
+    Ubuntu LP bug 811501.  Thanks to Dave Walker for the patch.
+    (Closes: #634056)
+  * Rearranged debian/rules to improve readability, and more 
+    importantly, fixed build-arch and build-indep targets.
+    fixes lintian debian-rule-missing-recommended-target
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 18 Jul 2011 09:19:41 -0500
+
+simh (3.8.1-3) unstable; urgency=low
+
+  * Rename nova to dgnova because of collision with python-novaclient
+    (Closes: #631834)
+  * Bump standards version from 3.8.4.0 to 3.9.1.0
+  * Dynamically link in libpcap instead of static link
+    fixes lintian embedded-library errors for pdp10 pdp11 vax
+    This also adds a dependency for the .deb on libpcap0.8
+  * fixed spelling error in hp2100_ipl.c from connnection to
+    connection.  Fixes lintian spelling-error-in-binary for hp2100
+  * escaped - in macro8x.1 to fix lintian "hyphen-used-as-minus-sign"
+  * A first attempt at a debian/watch file
+  * Applied Dennis Boone's patch to fix the H316 LDX instuction
+    See H316/h316_cpu.c in the case statement for STX and LDX 
+    (Closes: #631834)
+  * Explicitly set source format 1.0 (for now) in debian/source/format
+    This makes lintian happy, missing-debian-source-format goes away
+    Eventually I'll switch to Quilt-3.0 format, just not today.
+
+ -- Vince Mulhollon <vlm@debian.org>  Wed, 06 Jul 2011 05:07:45 -0500
+
+simh (3.8.1-2) unstable; urgency=low
+
+  * Build with ethernet (libpcap) support.
+    (Closes: #392834)
+  * Rename s3 to system3 as regards bug 549638 (name collision)
+  * Build-depends on debhelper > 7
+  * Some minor "make clean" changes to make lintian happy
+  * Standards-version bump from 3.8.0.0 to 3.8.4.0
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 26 Mar 2010 10:35:39 -0500
+
+simh (3.8.1-1) unstable; urgency=low
+
+  * New upstream released 08-Feb-2009
+  * I intentionally skipped ver 3.8.0 because it was buggy
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 20 Feb 2009 15:13:23 -0600
+
+simh (3.7.0-1) unstable; urgency=low
+
+  * New upstream released 03-Feb-2007
+  * i7094 added which emulates the IBM 7090/7094
+  * Upstream has converted almost entirely to pdf format for docs
+  * All manpages updated
+  * All docs are registered with the doc-base system
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 13 Apr 2007 20:16:15 -0500
+
+simh (3.6.1-1) unstable; urgency=low
+
+  * New upstream released 22-Jul-2006. Apparently I missed 3.6.0.
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 11 Aug 2006 20:53:47 -0500
+
+simh (3.5.2-1) unstable; urgency=low
+
+  * New upstream
+  * Thanks to the recent GFDL vote, I can again include the GFDL licensed
+    itsbuild.html document.
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 17 Mar 2006 21:03:33 -0600
+
+simh (3.5.1-1) unstable; urgency=low
+
+  * New upstream
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 31 Oct 2005 19:47:46 -0600
+
+simh (3.5.0-2) unstable; urgency=low
+
+  * Rename eclipse to eclipseemu (Closes: #329478)
+
+ -- Vince Mulhollon <vlm@debian.org>  Thu, 22 Sep 2005 14:05:07 -0500
+
+simh (3.5.0-1) unstable; urgency=low
+
+  * New upstream
+  * eclipse_tt.c relicensed to standard "supnik license" so now free
+    to include the eclipse emulator
+  * Have to remove itsbuild.html as its sadly non-free GFDL
+  * Upgrade to standards version 3.6.2.0
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat, 17 Sep 2005 19:50:15 -0500
+
+simh (3.4.0-1) unstable; urgency=low
+
+  * New upstream
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 30 May 2005 19:25:10 -0500
+
+simh (3.3.2-1) unstable; urgency=low
+
+  * New upstream
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 21 Mar 2005 19:43:29 -0600
+
+simh (3.3.1-1) unstable; urgency=low
+
+  * New upstream 
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 20 Feb 2005 18:49:46 -0600
+
+simh (3.3.0-2) unstable; urgency=low
+
+  * Fix typo in manpage for pdp7 
+    Same problem fixed in pdp4 and pdp15 manpages
+    Fixed related problem with pdp9 manpage refering to simh_doc.txt
+    Fixed related problem with i1620 manpage refering to i1620_doc.txt
+    (Closes: #285064)
+  * Added mtcvtv23.txt documentation file.
+  * Completely rewrote the makefile to be more standard.
+    (Closes: #283080)
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 19 Dec 2004 15:16:53 -0600
+
+simh (3.3.0-1) unstable; urgency=low
+
+  * New upstream released on 11/19/2004
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat, 20 Nov 2004 19:13:33 -0600
+
+simh (3.2.3-1) unstable; urgency=low
+
+  * New upstream
+  * Converted upstream.txt from a plain english text narrative
+    to a bash shell script
+  * Added simhpackage.txt which is a "log" of package creation
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat, 16 Oct 2004 16:36:56 -0500
+
+simh (3.2.2-1) unstable; urgency=low
+
+  * New upstream 3.2.2
+  * Now building VAX but not including the BIOS microcode because
+    its copyright situation is unclear.
+    (Closes: #226762)
+
+ -- Vince Mulhollon <vlm@debian.org>  Tue, 27 Jul 2004 19:44:55 -0500
+
+simh (3.2.0-1) unstable; urgency=low
+
+  * New upstream 3.2.0
+
+ -- Vince Mulhollon <vlm@debian.org>  Tue, 20 Apr 2004 20:01:26 -0500
+
+simh (3.1.0-1) unstable; urgency=low
+
+  * New upstream 3.1.0
+
+ -- Vince Mulhollon <vlm@debian.org>  Fri, 23 Jan 2004 21:11:56 -0600
+
+simh (3.0.2-1) unstable; urgency=low
+
+  * New upstream 3.0.2 released Sept 12 2003
+  * Added itsbuild.html which is an extremely detailed explanation of
+    how to install ITS using simh
+    (Closes: #105597)
+
+ -- Vince Mulhollon <vlm@debian.org>  Tue, 28 Oct 2003 20:00:05 -0600
+
+simh (3.0.1-1) unstable; urgency=low
+
+  * New upstream 3.0.1 released July 27 2003
+  * altair and altairz80 included, license change to DFSG free
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 14 Sep 2003 14:26:01 -0500
+
+simh (3.0.0-1) unstable; urgency=low
+
+  * New upstream version 3.0.0 released June 22 2003
+    (Closes: #198251)
+  * Now building pdp11-ether which is basically pdp11 plus some 
+    defines to allow the use of the simulated ethernet interface
+    (Closes: #182328)
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 22 Jun 2003 19:05:50 -0500
+
+simh (2.10.3-1) unstable; urgency=low
+
+  * New upstream version
+  * Split the nonfree components out of simh and into simh-nonfree
+  * simh (and esix, etc) can now go into main
+  * The collective wisdom of usenet indicates it is safe
+    to compile with -O2 flags.
+    (Closes: #178528)
+  * Added mmdir, gt7cvt, mtcvtfix tools to the build
+  * Numerous typographical fixes in the manpages I wrote.
+
+ -- Vince Mulhollon <vlm@debian.org>  Wed, 19 Feb 2003 18:29:01 -0600
+
+simh (2.10.1-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 24 Nov 2002 11:42:06 -0600
+
+simh (2.9.11-2) unstable; urgency=low
+
+  * rename executable for GRI emulator from gri to gri909
+    because of a name collision w/ the gri package
+    (Closes: #156393)
+  * wrote a better manpage for the macro8x assembler
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 12 Aug 2002 18:02:59 -0500
+
+simh (2.9.11-1) unstable; urgency=low
+
+  * New upstream version.
+  * Note the addition of the new GRI-909 simulator!
+  * This was released over a month ago, and one day later there was
+    a report of massive data corruption with the VAX via usenet.
+    I've waited a month and that appears to have been an isolated 
+    problem with that individual's particular machine.
+    No one has been able to reproduce that problem in the last month.
+    However, if you experience a reproducible VAX data corruption 
+    please file a bug with details.
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat, 10 Aug 2002 19:36:00 -0500
+
+simh (2.9.10-1) unstable; urgency=low
+
+  * Nes upstream version.
+
+ -- Vince Mulhollon <vlm@debian.org>  Tue, 18 Jun 2002 16:55:19 -0500
+
+simh (2.9.9-1) unstable; urgency=low
+
+  * New upstream version. 
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat,  4 May 2002 19:46:09 -0500
+
+simh (2.9.6-1) unstable; urgency=low
+
+  * New upstream version.
+  * VAX is no longer prerelease.
+
+ -- Vince Mulhollon <vlm@debian.org>  Mon, 22 Apr 2002 20:32:18 -0500
+
+simh (2.9.3-1) unstable; urgency=low
+
+  * New upstream version.
+  * Added upstreammods.txt to explain mods to upstream zips.
+  * Moved pdp8.1 from section 8 to section 1 (fixed typo).
+  * Wrote and added mtdump.1 file.
+  * Wrote and added macro8x.1 file.
+  * TOOLS/MISC/littcvt added to build
+  * TOOLS/MISC/mtcvtodd added to build
+  * TOOLS/MISC/oct2bin added to build
+  * TOOLS/MISC/sfmtcvt added to build
+  * Added menu entries for all emulators
+  * Had to rename AltairZ80/altairz80_defs.h to capitalize the Z
+  * ibm1130 added to build
+
+ -- Vince Mulhollon <vlm@debian.org>  Sun, 31 Mar 2002 19:21:39 -0600
+
+simh (2.9.2-1) unstable; urgency=low
+
+  * New maintainer.  See discussion in 116102.
+  * New upstream version. (Closes: #116102)
+  * Completely repackaged.
+
+ -- Vince Mulhollon <vlm@debian.org>  Sat, 23 Mar 2002 08:09:48 -0600
+
+simh (2.3d-4) unstable; urgency=low
+
+  * New maintainer (Closes: #68084)
+  * Removed manpage.1.ex, rebuilt debian/rules
+
+ -- Brian Russo <wolfie@debian.org>  Mon, 15 Jan 2001 03:49:05 -1000
+
+simh (2.3d-3) unstable; urgency=low
+
+  * Maintainer changed to Debian QA because Edward John M. Brocklesby
+    has already orphaned this package.
+  * /usr/doc -> /usr/share/doc
+  * Added build dependencies.
+  * Standards-Version: 3.1.1
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sun, 12 Nov 2000 13:03:17 +0100
+
+simh (2.3d-2) unstable; urgency=low
+
+  * Fixed maintainer email address 
+
+ -- Edward John M. Brocklesby <ejb@klamath.demon.co.uk>  Sat,  6 Feb 1999 15:20:46 +0000
+
+simh (2.3d-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Edward John M. Brocklesby <ejb@klamath.demon.co.uk>  Sun, 17 Jan 1999 19:52:55 +0000
+

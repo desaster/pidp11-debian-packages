@@ -1,0 +1,13 @@
+# Specify commit id to fetch a specific version from the git repository.
+# By tagging a specific commit, we ensure this build script always works.
+SIMH_COMMIT=477bcbe97d72b8126c24d4381bb48d8bebc90cb0
+BLINKENBONE_COMMIT=1ce5c0657690ebd8e5f343f36fd4473a60d4402b
+
+# Your details here are appended to the changelog of the package:
+DEB_AUTHOR_NAME=""
+DEB_AUTHOR_EMAIL=""
+
+# Use some personal tag here, like "bob":
+DEB_VERSION_TAG="custom"
+
+# vim: set ft=sh:

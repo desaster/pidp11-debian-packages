@@ -1,0 +1,15 @@
+simh for DEBIAN
+----------------------
+
+I am required to state the following:
+"this software is based in part on the original work of Robert M Supnik".
+
+Note that the eclipse emulator executable name has changed to eclipeemu 
+due to a naming conflict.
+
+Note that the s3 emulator executable name has changed to system3 due to a
+naming conflict.
+
+Note that the nova emulator executable name has changed to dgnova due to
+a naming conflict.
+

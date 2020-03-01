@@ -1,0 +1,26 @@
+Source: simh
+Section: otherosfs
+Priority: optional
+Maintainer: Upi Tamminen <desaster@gmail.com>
+Build-Depends: debhelper (>= 10), libpcap0.8-dev, libsdl2-dev, libpng-dev, libvdeplug-dev, libreadline-dev
+Standards-Version: 4.0.0
+Homepage: http://simh.trailing-edge.com
+
+Package: simh
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Emulators for 33 different computers
+ This is the SIMH set of emulators for 33 different computers:
+ DEC PDP-1, PDP-4, PDP-7, PDP-8, PDP-9,
+ DEC PDP-10, PDP-11, PDP-15,
+ Data General Nova, Eclipse,
+ GRI-909,
+ Honeywell 316, 516,
+ HP 2100,
+ IBM System 3 Model 10, 1401, 7094
+ IBM 1620 Model 1, IBM 1620 Model 2,
+ Interdata 3, 4, 5, 70, 80, 7/16, 8/16, 8/16E,
+ Interdata 7/32, 8/32,
+ SDS 940,
+ LGP-21, LGP-30,
+ DEC VAX (but cannot include the microcode due to copyright)

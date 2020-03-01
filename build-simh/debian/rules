@@ -1,0 +1,19 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+export DEB_BUILD_OPTIONS=nocheck
+
+%:
+	dh $@ 
+
+override_dh_compress:
+	dh_compress -X.pdf
+
+override_dh_auto_clean:
+	dh_auto_clean -- -C ../simh-repo
+
+override_dh_auto_build:
+	$(MAKE) -C ../simh-repo \
+	    TESTS=0 \
+	    BLINKENLIGHT_COMMON_DIR="../blinkenbone-repo/projects/00_common" \
+	    BLINKENLIGHT_API_DIR="../blinkenbone-repo/projects/07.0_blinkenlight_api"

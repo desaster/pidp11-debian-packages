@@ -1,0 +1,628 @@
+<html>
+<head>
+<title>Building an ITS from scratch on the Supnik PDP-10 simulator</title>
+<base href="http://www.cosmic.com/u/mirian/its/">
+</head>
+<body>
+<h2>Building an ITS from scratch on the Supnik PDP-10 simulator</h2>
+<pre>
+     $Revision: 1.8 $
+     $Date: 2003/07/20 19:38:11 $
+</pre>
+Copyright &copy; 2001,2003 Mirian Crzig Lennox<br>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the
+<a href="http://www.gnu.org/copyleft/fdl.html">
+GNU Free Documentation License</a>, Version 1.1
+or any later version published by the Free Software Foundation.
+<hr>
+
+<h3><a name="start">Getting Started</a></h3>
+
+First of all, it is assumed that you have read and understand
+<tt>AI: KSHACK; BUILD DOC</tt>.
+
+For your convenience, a copy is available
+<a href="files/build.doc.txt">here</a>.
+This file should be considered a companion to that document, not
+a replacement.<p>
+
+ITS supports four different disk types: the RM03, the RM80, the
+RP06 and the RP07.  Although these disk types are very different
+at the hardware level, from the simulator's point of view they
+differ only in capacity and geometry.  This document uses the RP06
+as an example; however, the procedure is similar for any of the
+other three disk types.<p>
+
+Materials you will need to install ITS:
+<ul>
+  <li>
+      A working <tt>pdp10 </tt> executable from the
+      <a href="http://simh.trailing-edge.com/">SIMH simulator</a>.
+      This document assumes that SIMH V3.0 is being used.</li>
+      
+  <li>
+      The RP06-based Salvager boot tape image
+      <a href="files/salv.rp06.tape"><tt>salv.rp06.tape</tt></a>.</li>
+
+  <li>
+      The RP06-based <tt>DSKDMP</tt> boot tape image
+      <a href="files/dskdmp.rp06.tape"><tt>dskdmp.rp06.tape</tt></a>.</li>
+
+  <li>
+      A <tt>MINSYS</tt> tape image.  This is a DUMPER tape containing
+      a minimal ITS bootstrap system.  The contents of these may vary,
+      however a usable one is available here:
+      <a href="files/minsys.tape"><tt>minsys.tape</tt></a>.</li>
+</ul>
+
+<h3><a name="conventions">
+Conventions used in this document</a></h3>
+
+Throughout this document, sample output from the simulator is
+shown in <tt>typewriter font</tt>.  Keyboard input required to be
+typed by the user is shown in <tt><b>bold typewriter
+font</b></tt>.<p>
+
+The symbol <tt><b>«</b></tt> is used to indicate where a carriage
+return should be typed; this is necessary because ITS programs are
+not consistent about requiring a carriage return or not, and in
+cases where a carriage return is not expected by the program, the
+carriage return will be taken as input to the following query,
+which is likely to be incorrect.<p>
+
+The constructs <tt>ESC-g</tt> and <tt>^C</tt>, where <tt>g</tt>
+and <tt>C</tt> represent any letter of the alphabet, have their
+usual meanings: <tt>ESC-g</tt> means to type the Escape key and
+then the letter <tt>g</tt> and <tt>^C</tt> means to hold down the
+Control key and type the letter <tt>C</tt>.
+
+<h3><a name="config">Configuring the Simulator</a></h3>
+
+Create a file named <tt>init</tt> containing the following:
+
+<pre>
+set cpu its
+set tim y2k
+at tu0 minsys.tape
+at tu1 salv.rp06.tape
+at tu2 dskdmp.rp06.tape
+set rp0 rp06
+at rp0 rp0.dsk
+</pre>
+
+This is the configuration file that the PDP-10 simulator will use;
+it contains commands which will be executed when
+<tt>pdp10 </tt>starts.  The various lines are explained below:
+
+<ul>
+  <li><code><b>set cpu its</b></code><br>
+      This tells SIMH to simulate ITS IO and paging
+      microcode, which differs significantly from the
+      standard DEC microcode.</li>
+  <li><code><b>set tim y2k</b></code><br>
+      This tells the simulator that you are using a Y2K-aware operating
+      system (which ITS is), so it can report the time correctly for
+      the 21st century.
+  <li><code><b>at tu0 minsys.tape</b></code><br>
+      Mount the <tt>MINSYS</tt> tape on tape unit 0.
+  <li><code><b>at tu1 salv.rp06.tape</b></code><br>
+      Mount the RP06 version of Salvager boot tape on tape unit 1.
+  <li><code><b>at tu2 dskdmp.rp06.tape</b></code><br>
+      Mount the RP06 version of <tt>DSKDMP</tt> boot tape on tape unit 2.
+  <li><code><b>set rp0 rp06</b></code><br>
+      Tell disk unit 0 that it will be simulating an RP06.
+  <li><code><b>at rp0 rp0.dsk</b></code><br>
+      This mounts the simulated disk image <tt>rp0.dsk</tt> on disk
+      unit 0.  <em>However</em>, this image does not yet exist; it
+      will be created by the simulator.
+</ul>
+
+<h3><a name="formatting">Formatting the disk image</a></h3>
+
+Start the simulator with the configuration file you just made:
+
+<pre>
+$ <b>pdp10 init«</b>
+
+PDP-10 simulator V3.0-0
+RP: creating new file
+sim&gt;
+</pre>
+
+The <code>sim&gt;</code> is the front-end console prompt.  Typing
+<code><b>help</b></code> to it gives a list and short description
+of the commands it understands.  To prepare the initial disk
+image, you need to boot the Salvager tape:
+
+<pre>
+sim&gt; <b>b tu1«</b>
+ITS MTBOOT.176
+</pre>
+
+The Salvager doesn't have a prompt or any command-line interface
+at all; at this point you are talking to Exec-<tt>DDT</tt>.  In order to
+call Salvager functions, you need to use <tt>DDT</tt> to call them.  Note
+that <tt>$</tt> is the character printed by <tt>DDT</tt> when the Escape
+key is typed, so when you see <tt>$</tt>, type the Escape key, not
+a dollar sign.  Also, <tt>DDT</tt> prints a single quote <tt>'</tt>
+whenever it recognizes a symbol for the first time; when you see a
+<tt>'</tt> in the sample output below, you are not expected to
+type this character.<p>
+
+First, you need to &ldquo;mark&rdquo; (format) the disk, so type
+
+<pre>
+<b>MARK$G</b>'
+Format pack on unit #<b>0</b>
+Are you sure you want to format pack on drive # 0 (Y or N) <b>y</b>
+Pack no?<b>0«</b>
+Pack 0., Drive #0 is serial #17.
+Begin formatting 815. cylinders....Hardware formatting complete.
+Verify pack? (Y or N) <b>n«</b>
+</pre>
+
+Be sure you answer in the negative when asked to verify the pack.  For
+technical reasons beyond the scope of this document, verification does
+not work (and isn't necessary anyway, since our simulated disk won't
+have any hardware errors).<p>
+
+You will then be asked for some filesystem parameters:
+
+<pre>
+Swapping Alloc? <b>3000«</b>
+Pack #0.  ID?<b>foobar«</b>
+
+DDT
+</pre>
+
+<p>
+Of course, you can choose any name of six characters or less for the
+Pack ID in place of &ldquo;foobar&rdquo; above.
+
+
+<p>
+The disk is now formatted, and the Salvager returns you to
+<tt>DDT</tt>.
+<p>
+<b>Important note:</b> If you are using SIMH V3.0-0 <i>only</i>, you
+will need to reboot the Salvager tape at this point.  This is because
+of a bug in the &ldquo;read header&rdquo; function in the RP device.
+The bug is fixed in V3.0-1 and later, so only users of V3.0-0 need to
+perform this step:
+
+<pre>
+<b>^E</b>
+
+Simulation stopped, PC: 773131 (POPJ 1,0)
+sim&gt; <b>b tu1«</b>
+ITS MTBOOT.176
+</pre>
+
+<h3><a name="minsys">Loading <tt>MINSYS</tt></a></h3>
+
+Now that you have a formatted disk, you need to load the minimal
+bootstrap ITS, called <tt>MINSYS</tt>.  This is accomplished with
+the <tt>TRAN</tt> utility in Salvager:
+
+<pre>
+<b>TRAN$G</b>
+
+
+
+onto unit #<b>0</b>
+Copy from unit #5 onto unit #0, OK (Y or N) <b>y</b>
+</pre>
+
+&ldquo;Unit #5&rdquo; is just the Salvager's name for the tape drive.  It has
+no real significance.  Once you type <b>y</b>, a flood of
+filenames should scroll by as the <tt>MINSYS</tt> files are
+loaded.  Each filename should be followed by <tt>OK</tt> to show
+that the file loaded without error.  (The elipsis (<tt>...</tt>)
+indicates where the sample output has been trimmed for brevity.)
+When all the files have been transferred, <tt>EOT</tt> will be
+printed, followed by the <tt>DDT</tt> prompt:
+
+<pre>
+Tape #0
+.;@ DDT OK
+
+.;ITS RM03 OK
+
+.;ITS RM80 OK
+
+.;ITS RP06 OK
+
+.;ITS RP07 OK
+
+.;SALV RM03 OK
+
+.;SALV RM80 OK
+
+.;SALV RP06 OK
+
+...
+
+SYS2;TS FTP OK
+
+DEVICE;TCP SYN025 OK
+
+SYS;SYSTEM MAIL OK
+
+EOT
+
+DDT
+</pre>
+
+<h3><a name="image">Building the ITS monitor image</a></h3>
+
+Now it is time to halt the system and boot from the other boot
+tape, <tt>DSKDMP</tt>.  This is a standalone utility that allows
+us to build an executable image out of pieces and dump the results
+into a single image.
+
+To halt the simulator and return to the front-end console, type
+<tt><b>^E</b></tt> (control-E).  Then, boot from tape unit 2, and
+when the <tt>MTBOOT</tt> prompt comes up, start <tt>DSKDMP</tt> by
+typing <tt>ESC-g</tt>
+
+<pre>
+<b>^E</b>
+
+Simulation stopped, PC: 773035 (JRST 0,773034)
+sim&gt; <b>b tu2«</b>
+ITS MTBOOT.176
+<b>$G</b>
+
+DSKDMP
+</pre>
+
+<tt>DSKDMP</tt> knows how to read an ITS filesystem and load files
+into memory (and write files back to disk).  By default, filenames
+are expected to be in the <tt>.</tt> directory and to have
+<tt>@</tt> as the first filename (the convention for standalone
+executable files).<p>
+
+Load a copy of standalone (Exec) <tt>DDT</tt> from <tt>.; @ DDT</tt> like
+so:
+
+<pre>
+<b>l$ddt«</b>
+</pre>
+
+Then load a copy of the ITS binary which is appropriate for the
+disk type you are using (<code>.; ITS RP06</code> in our case).
+We use the <code>T</code> command which gives the file's symbols
+to <tt>DDT</tt>, and then starts <tt>DDT</tt>:
+
+<pre>
+<b>t$its rp06«</b>
+</pre>
+
+Now you are back in <tt>DDT</tt>, but you still need to go back to
+<tt>DSKDMP</tt>, so type <tt>ESC-u</tt>.
+
+<pre>
+<b>$U</b>
+DSKDMP
+</pre>
+
+Now merge in a copy of the Salvager binary appropriate for your
+disk type (RP06):
+
+<pre>
+<b>m$salv rp06«</b>
+</pre>
+
+And finally, dump the whole thing out as <tt>.; @ ITS</tt> as
+so:
+
+<pre>
+<b>d$its«</b>
+</pre>
+
+You can list the <tt>.</tt> directory with the <tt>F</tt>
+command:
+
+<pre>
+<b>f$</b>
+#00 @      ITS   
+#00 RAM    RAM   
+#00 BT     RP07  
+#00 BT     RP06  
+#00 BT     RM80  
+#00 BT     RM03  
+#00 DSKDMP RP07  
+#00 DSKDMP RP06  
+#00 DSKDMP RM80  
+#00 DSKDMP RM03  
+#00 SALV   RP07  
+#00 SALV   RP06  
+#00 SALV   RM80  
+#00 SALV   RM03  
+#00 ITS    RP07  
+#00 ITS    RP06  
+#00 ITS    RM80  
+#00 ITS    RM03  
+#00 @      DDT   
+</pre>
+
+You should notice that the first filename in the listing is now
+<tt>@ ITS</tt> which is the file you just built.
+
+<h3><a name="booting">Booting the dumped ITS</a></h3>
+
+Now the big moment: time to boot that ITS image.  First load it by
+typing its name, and then use <tt>ESC-g</tt> to start it:
+
+<pre>
+<b>its«</b>
+<b>$G</b>
+
+Salvager 255
+
+
+</pre>
+
+If all goes well, you should soon start seeing bootup messages
+from ITS:
+
+<pre>
+DB ITS 1633 IN OPERATION
+DB ITS 1633 SYSTEM JOB USING THIS CONSOLE.
+THE KS-10 CLOCK HAS BEEN RESET, IF THE TIME CANNOT
+BE DETERMINED FROM THE NETWORK, YOU MAY HAVE TO :PDSET
+YEAR, PDTIME OFFSET, NOT ON DISK.
+PLEASE SETLOC APPROPRIATELY.
+LOGIN  TARAKA 0 
+TOP LEVEL INTERRUPT 40 DETACHED JOB # 2, USR:TARAKA DRAGON 
+</pre>
+
+Now ITS is in full timesharing mode and waiting for you to log in
+on the console.  Type <tt>^Z</tt> to get its attention:
+
+<pre>
+<b>^Z</b>
+DB ITS.1633. DDT.1546.
+TTY 0
+You're all alone, Fair share = 99%
+
+(ITS does not know the date, so messages cannot be reviewed right now.)
+</pre>
+
+<h3><a name="pdset">Setting the correct time with <tt>PDSET</tt></a></h3>
+
+The first thing you should do is to tell ITS the correct century,
+date and time with <tt>PDSET</tt>:
+
+<pre>
+<b>:pdset«</b>
+(Please Log In)
+___002 PDSET  IOTLSR 
+
+PDSET.114
+
+Please don't use this program unless you know how.
+You are certain to break something if you happen to hit the wrong key.
+Type Control-Z to exit, or ? for a reminder of the commands.     
+</pre>
+
+The &ldquo;Please Log In&rdquo; message is a harmless reminder that you
+haven't told ITS your login name yet.  It can be
+ignored for now.
+
+<p>First tell <tt>PDSET</tt> the correct century, since it will
+assume it is in the 1900s by default.  Then tell it the date and
+time in YYMMDD and HHMMSS format.  Any line which is messed up can
+be re-entered.  When you are satisfied that it is correct, type
+<tt>!.</tt> (exclamation point, and then period).
+
+<p>For example, on July 20, 2003 at 3:02PM, you would type:
+
+<pre>
+<b>20C</b>
+<b>030720D</b>
+<b>150200T</b>
+<b>!.</b>
+113375/ 0       770201,,513056  ___002 
+
+113374/ 0       3723    ___002 
+IT IS NOW  3:02:00 PM EDT, SUNDAY, JUL 20,2003
+</pre>
+
+Additionally, you may see some lines from <tt>TARAKA</tt> informing
+you that it is copying the ITS image.
+
+<pre>
+TARAKA DMPCPY .      _DMPCP OUTPUT WRITE  15:02:02
+TARAKA DMPCPY .      @      ITS    DELRNM 15:02:02
+</pre>
+
+This is a normal function which <tt>TARAKA</tt> performs, and no cause
+for alarm.
+
+In any case, type <tt><b>q</b></tt> to leave the <tt>PDSET</tt> program.
+
+<pre>
+<b>Q</b>
+:KILL
+*
+</pre>
+
+<h3><a name="ksfedr">
+Making the disk bootable, stage 1: <tt>KSFEDR</tt></a></h3>
+
+Now it is time to make the disk bootable, so that tape images no
+longer need to be mounted.  This is done with the <tt>KSFEDR</tt>
+program:
+
+<pre>
+<b>:ksfedr«</b>
+(Please Log In)
+ERROR: File not found:  PK0000: .; .FEFS. PK0000
+!<b>create«</b>
+___002 KSFEDR .      .FEFS. PK0000 WRITE  15:06:01
+FE filesystem DSK: .; .FEFS. PK0000 on pack #0.
+Directory address: 6600000004
+!<b>write«</b>
+Are you sure you want to scribble in the FE filesystem?  <b>yes«</b>
+Which file? <b>bt«</b>
+Input from (Default DSK: ___004; BT BIN): <b>.;bt rp06«</b>
+!<b>quit«</b>
+
+:KILL
+*
+</pre>
+
+The above sequence creats a front-end filesystem on your disk, and
+write the RP06-specific bootstrap to it from the <tt>MINSYS</tt>
+installation.  If this were a real KS10, you would also need to
+write a microcode file, but the simulated KS10 doesn't need it.
+
+<p>Make a note of the number after &ldquo;Directory address&rdquo;
+(<tt>6600000004</tt> in the sample above).  You will need it in stage 2.
+
+<p>Note that you must affirm your desire to scribble in the FE
+filesystem with the full word &ldquo;yes&rdquo;; a simple
+&ldquo;y&rdquo; is not sufficient.  Note also the <tt>.;</tt> (dot and
+semicolon) before <tt>bt rp06</tt> in the input filename.
+
+<p>Now use the <tt>LOCK</tt> program to take the system down, as so:
+
+<pre>
+<b>:lock«</b>
+(Please Log In)
+LOCK.154
+
+_<tt>5kill</tt>
+DO YOU REALLY WANT THE SYSTEM TO GO DOWN?
+<b>y</b>
+___002 LOCK   SYS    DOWN   MAIL   WRITE  15:18:41
+
+PLEASE ENTER A BRIEF MESSAGE TO USERS, ENDED BY ^C
+</pre>
+
+Since you're the only one on the system, you can just type
+<tt>^C</tt>.  ITS will then complete the shutdown process (it
+takes about a minute):
+
+<pre>
+DB ITS going down in 5:00
+CULPRIT =  ___002 LOCK   15:19:06
+
+
+_
+DB ITS 1633 NOT IN OPERATION 15:19:06
+PFTHMG DRAGON CHANNA _DRGN_ TIMES  WRITE  15:19:06
+PFTHMG DRAGON CHANNA LOGOUT TIMES  DELRNM 15:19:06
+
+SHUTDOWN COMPLETE  
+PI LEVEL 7 BUGDDT.  TYPE <ALTMODE>P TO CONTINUE.
+YOU ARE NOW IN DDT.
+BUGPC/   CAIA COFFI4+1   $Q-2/   JRST COFFI7   
+</pre>
+
+<h3><a name="feset">
+Making the disk bootable, stage 2: <tt>FESET</tt></a></h3>
+
+Now that the system is down, type <tt>^E</tt> to get to the
+simulator's front-end console, and boot from tape unit 1 (the
+Salvager) again:
+
+<pre>
+<b>^E</b>
+Simulation stopped, PC: 773034 (PUSHJ 1,773130)
+sim&gt; <b>b tu1«</b>
+ITS MTBOOT.176
+</pre>
+
+Use the <tt>FESET</tt> utility in Salvager to make the disk
+bootable:
+
+<pre>
+<b>FESET$G</b>'
+Set the FE filesystem directory pointer on the pack on unit #<b>0</b>
+Directory address: <b>6600000004«</b>
+
+DDT
+</pre>
+
+The directory address is the one you got from <tt>KSFEDR</tt> in
+stage 1.  Now type <tt>^E</tt> to get back to the simulator
+front-end console and type <tt>quit</tt> to leave the simulator
+altogether:
+
+<pre>
+<b>^E</b>
+
+Simulation stopped, PC: 773130 (SKIPN 5,32)
+sim&gt; <b>quit«</b>
+Goodbye
+$ 
+</pre>
+
+Now copy the configuration file, <tt>init</tt>, that you made at
+the beginning of this procedure, to the new name <tt>boot</tt>.
+Edit <tt>boot</tt> with a text editor and remove the
+following three lines:
+
+<pre>
+at tu0 minsys.tape
+at tu1 salv.rp06.tape
+at tu2 dskdmp.rp06.tape
+</pre>
+
+since the tape images aren't needed anymore.
+Then add this line to the bottom of the file:
+
+<pre>
+b rp0
+</pre>
+
+This tells the simulator to immediately boot from disk unit 0 when
+it is started.
+
+<h3><a name="diskboot">Booting ITS from disk</a></h3>
+
+Now it is time to try out the new bootable disk you just made.
+Note that this piece of the installation is the normal bootup
+procedure for ITS and needs to be done every time you want to
+bring up the system:
+
+<pre>
+$ <b>pdp10 boot«</b>
+
+PDP-10 simulator V3.0-0
+
+DSKDMP
+</pre>
+
+As before, load the standalone <tt>.; @ ITS</tt> from disk and
+start it with <tt>ESC-g</tt> as so:
+
+<pre>
+<b>its«</b>
+<b>$G</b>
+
+Salvager 255
+
+.TEMP. has no files, User File Directory DELETED
+
+
+DB ITS 1633 IN OPERATION
+DB ITS 1633 SYSTEM JOB USING THIS CONSOLE.
+THE KS-10 CLOCK HAS BEEN RESET, IF THE TIME CANNOT
+BE DETERMINED FROM THE NETWORK, YOU MAY HAVE TO :PDSET
+LOGIN  TARAKA 0 
+TOP LEVEL INTERRUPT 40 DETACHED JOB # 2, USR:TARAKA DRAGON 
+</pre>
+
+Login with <tt>^Z</tt> and use <tt>PDSET</tt> as previously
+described to set the current time.<p>
+
+At this point, you have a minimal multiuser ITS system.  
+
+<hr>
+Mirian Crzig Lennox<br>
+</body>
+</html>

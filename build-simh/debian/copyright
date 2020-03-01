@@ -1,0 +1,104 @@
+This package was debianized by Vince Mulhollon <vlm@debian.org> on
+Sun, 14 Sep 2003 14:30:25 -0500.
+
+
+It was downloaded from http://simh.trailing-edge.com
+
+Code: All code except as otherwise listed below
+Upstream Author: Robert Supnik <bob@supnik.org> 
+Copyright for Supnik-written code:
+  (This is refered to below as "standard Supnik License") 
+  Original code published in 1993-2002, written by Robert M Supnik
+  Copyright (c) 1993-2002, Robert M Supnik
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the "Software"),
+  to deal in the Software without restriction, including without limitation
+  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+  and/or sell copies of the Software, and to permit persons to whom the
+  Software is furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+  ROBERT M SUPNIK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+  IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+  CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+  Except as contained in this notice, the name of Robert M Supnik shall not
+  be used in advertising or otherwise to promote the sale, use or other dealings
+  in this Software without prior written authorization from Robert M Supnik.
+
+Code: NOVA
+Upstream Authors: Bruce Ray, Robert M. Supnik
+Copyright for NOVA:
+  Copyright (c) 2000-2002, Robert M. Supnik
+  Written by Bruce Ray and used with his gracious permission.
+  (Insert standard Supnik License)
+
+Code: PDP11
+Upstream Authors: Robert M Supnik, Stephen F. Shirron
+Copyright for PDP11:
+  Copyright (c) 2002, Robert M Supnik
+  Derived from work by Stephen F. Shirron
+  (Insert standard Supnik License)
+
+Code: S3
+Upstream Authors: Robert M. Supnik, Charles E. Owen
+Upstream Authors: Henk Stegeman, Roger Bowler
+Copyright for S3:
+  Copyright (c) 2001 Charles E. Owen
+  Commercial use prohibited
+  Copyright (c) 1993-2001, Robert M. Supnik
+  HPL & SLC instruction code Copyright (c) 2001 by Henk Stegeman
+  Decimal Arithmetic Copyright (c) 2000 by Roger Bowler
+  (Insert standard Supnik License)
+
+Code: MACRO1, MACRO7, MACRO8
+Upstream Authors: Gary A. Messenbrink <gary@netcom.com>
+Upstream Authors: Bob Supnik <bob.supnik@ljo.dec.com>
+Copyright for MACRO1, MACRO7, MACRO8:
+  Author Gary A. Messenbrink <gary@netcom.com>
+  MACRO7 modifications: Bob Supnik <bob.supnik@ljo.dec.com
+  This assembler is based on the pal assember by:
+  Douglas Jones <jones@cs.uiowa.edu> and 
+  Rich Coon <coon@convexw.convex.com>
+  COPYRIGHT NOTICE:
+  This is free software.  There is no fee for using it.  You may make
+  any changes that you wish and also give it away.  If you can make
+  a commercial product out of it, fine, but do not put any limits on
+  the purchaser's right to do the same.  If you improve it or fix any
+  bugs, it would be nice if you told me and offered me a copy of the
+  new version.
+
+Code: MACRO11
+Upstream Author: Richard Krehbiel
+Copyright for MACRO11:
+  Copyright (c) 2001, Richard Krehbiel
+  All rights reserved.
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+  o Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  o Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+  o Neither the name of the copyright holder nor the names of its
+    contributors may be used to endorse or promote products derived from
+    this software without specific prior written permission.
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+    A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+    HOLDERS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+    INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+    BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+    OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+    ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+    TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+    USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH
+    DAMAGE.
+
+the itsbuild.html file was written by Mirian Crzig Lennox and is 
+released under the GNU FDL, and the original file is available at
+http://www.cosmic.com/u/mirian/its/itsbuild.html

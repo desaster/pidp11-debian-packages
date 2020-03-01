@@ -1,0 +1,9 @@
+[Unit]
+Description=blinkenlightd (PiDP-11)
+
+[Service]
+ExecStart=/usr/bin/pidp1170_blinkenlightd
+
+[Install]
+Wants=rpcbind.service
+WantedBy=multi-user.target

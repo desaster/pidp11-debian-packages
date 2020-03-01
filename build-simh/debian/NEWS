@@ -1,0 +1,7 @@
+simh (3.8.1-3) unstable; urgency=low
+
+    Renamed nova emulator to dgnova because of name collision with
+    a binary in the python-novaclient package
+
+ -- Vince Mulhollon <vlm@debian.org>  Wed, 06 Jul 2011 05:07:45 -0500
+

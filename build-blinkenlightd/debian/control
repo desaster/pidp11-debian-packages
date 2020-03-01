@@ -1,0 +1,21 @@
+Source: blinkenlightd-pidp11
+Section: otherosfs
+Priority: optional
+Maintainer: Upi Tamminen <desaster@gmail.com>
+Build-Depends: debhelper (>= 10)
+Standards-Version: 4.0.0
+Homepage: https://github.com/j-hoppe/BlinkenBone/
+
+Package: blinkenlightd-pidp11
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: BlinkenBone - extend the SimH simulator with real or simulated console panels.
+ "BlinkenBone" is an architecture to connect simulators of vintage computers
+ with "Blinkenlight panels".
+ The panels can be vintage physical panels enhanced with modern micro-Linux
+ controllers, or graphical Java simulations of the panels.
+ The interface between simulator and panel is a network-base client/server
+ model.
+ At the moment, DEC PDP-11/20, PDP-11/40, PDP-11/70, PDP-8/I, PDP-10/KI10 and
+ PDP-15 are available.
+ This is an unofficial debian package.

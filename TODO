@@ -1,0 +1,4 @@
+TODO
+
+* create a pidp11 package that will run simh as a service, and provide some
+  utils
