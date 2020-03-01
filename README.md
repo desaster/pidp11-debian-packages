@@ -14,9 +14,10 @@ Installation Instructions.
 
 The following packages are provided:
 
+| package               | description                                                |
+| --------------------- | ---------------------------------------------------------- |
 | simh                  | unofficial variant of simh with blinkenbone features added |
 | blinkenlightd-pidp11  | led controller server from the blinkenbone project         |
-| pidp11-utils          | utilities bringing it all together                         |
 
 ## simh
 
