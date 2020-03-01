@@ -103,7 +103,7 @@ function append_version () {
 
     if [[ "$DEB_AUTHOR_NAME" == "" || "$DEB_AUTHOR_NAME" == "" ]]
     then
-        echo "Author name/email not configured! Please edit build-conf"
+        echo "Author name/email not configured! Please edit build-config"
         exit 12
     fi
 
